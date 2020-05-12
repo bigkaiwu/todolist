@@ -9,6 +9,8 @@ import { Input } from 'element-ui'
 import { Table } from 'element-ui'
 import { TableColumn } from 'element-ui'
 import { DatePicker } from 'element-ui'
+import { Alert } from 'element-ui'
+import { Message } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Breadcrumb)
@@ -20,3 +22,9 @@ Vue.use(Input)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(DatePicker)
+Vue.use(Alert)
+
+// 解决组件Message报错this.$message is not a function
+Vue.prototype.$message = Message
+// 解决element-ui 引用Message后如直接写Vue.use(Message),页面刷新时会自动弹Message问题
+Vue.component(Message.name, Message)

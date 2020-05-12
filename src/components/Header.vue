@@ -39,6 +39,11 @@
         :data="tableData"
         style="width: 100%">
         <el-table-column
+          label="序号"
+          width="180">
+          <template slot-scope="scope">{{ scope.$index +1}}</template>
+        </el-table-column>
+        <el-table-column
           prop="name"
           label="姓名"
           width="180">
@@ -50,19 +55,25 @@
         </el-table-column>
         <el-table-column
           prop="tips"
-          label="备注">
+          label="备注"
+          width="280">
         </el-table-column>
         <el-table-column
           prop="time"
           label="时间">
+        </el-table-column>
+        <el-table-column
+          label="操作">
+          <template slot-scope="scope">
+            <el-button type="primary" icon="el-icon-edit" circle></el-button>
+            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+          </template>
         </el-table-column>
       </el-table>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
   name: 'Header',
   data(){
@@ -74,15 +85,43 @@ export default {
         time:''
       },
       tableData: [{
-            name: '王小虎',
-            tel:'13696551234',
-            tips: '这是一段备注文字',
-            time:'2020-5-12'
-          }]
+        name: '王小虎',
+        tel:'13696551234',
+        tips: '这是一段备注文字',
+        time:'2020-05-12'
+      }]
     }
   },
   methods:{
     add(){
+      if(!this.addUser.name){
+        this.$message({
+          message: '请输入姓名',
+          type: 'warning'
+        });
+        return;
+      }
+      if(!this.addUser.tel){
+        this.$message({
+          message: '请输入号码',
+          type: 'warning'
+        });
+        return;
+      }
+      if(!/^1[3456789]\d{9}$/.test(this.addUser.tel)){
+        this.$message({
+          message: '请输入正确的号码',
+          type: 'warning'
+        });
+        return;
+      }
+      if(!this.addUser.time){
+        this.$message({
+          message: '请选择日期',
+          type: 'warning'
+        });
+        return;
+      }
       this.tableData.push(this.addUser)
       this.addUser=''
     }
