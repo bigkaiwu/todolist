@@ -28,11 +28,13 @@
           <el-date-picker
             v-model="addUser.time"
             type="date"
-            placeholder="请选择日期">
+            placeholder="请选择日期"
+            format="yyyy 年 MM 月 dd 日"
+            value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-col>
       </el-row>
-      <el-button class="add" type="primary">添加表单</el-button>
+      <el-button class="add" type="primary" @click="add">添加表单</el-button>
       <el-table
         :data="tableData"
         style="width: 100%">
@@ -49,10 +51,6 @@
         <el-table-column
           prop="tips"
           label="备注">
-        </el-table-column>
-        <el-table-column
-          prop="time"
-          label="时间">
         </el-table-column>
         <el-table-column
           prop="time"
@@ -78,9 +76,15 @@ export default {
       tableData: [{
             name: '王小虎',
             tel:'13696551234',
-            tips: '前额M型脱发',
+            tips: '这是一段备注文字',
             time:'2020-5-12'
           }]
+    }
+  },
+  methods:{
+    add(){
+      this.tableData.push(this.addUser)
+      this.addUser=''
     }
   }
 }
