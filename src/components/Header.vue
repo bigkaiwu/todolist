@@ -66,7 +66,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" circle></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+            <el-button type="danger" icon="el-icon-delete" @click="del(scope.$index)" circle></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -124,6 +124,9 @@ export default {
       }
       this.tableData.push(this.addUser)
       this.addUser=''
+    },
+    del(idx){
+      this.tableData.splice(idx,1)
     }
   }
 }
