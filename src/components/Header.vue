@@ -36,7 +36,7 @@
       </el-row>
       <el-button class="add" type="primary" @click="add">添加表单</el-button>
       <el-table
-        :data="tableData"
+        :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
         style="width: 100%">
         <el-table-column
           label="序号"
@@ -62,8 +62,13 @@
           prop="time"
           label="时间">
         </el-table-column>
-        <el-table-column
-          label="操作">
+        <el-table-column>
+          <template slot="header" slot-scope="scope">
+            <el-input
+              v-model="search"
+              size="mini"
+              placeholder="输入姓名搜索"/>
+          </template>
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" @click="edit(scope.row,scope.$index)" circle></el-button>
             <el-button type="danger" icon="el-icon-delete" @click="del(scope.$index)" circle></el-button>
@@ -121,8 +126,13 @@ export default {
       tableData: [{ 
         name: '王小虎',
         tel:'13696551234',
-        tips: '这是一段备注文字',
+        tips: '这是一段备注文字1',
         time:'2020-05-12'
+      },{ 
+        name: '汪小帅',
+        tel:'13523568547',
+        tips: '这是一段备注文字2',
+        time:'2020-05-13'
       }],
       dialogVisible: false, //编辑弹框显示
       editUser:{ //添加用户信息
@@ -131,7 +141,8 @@ export default {
         tips:'',
         time:''
       },
-      userIndex:0
+      userIndex:0,
+      search: ''
     }
   },
   methods:{
@@ -186,6 +197,7 @@ export default {
         });
     },
     handleClose() {
+      this.dialogVisible = false
     },
     edit(item,idx){
       this.userIndex = idx
