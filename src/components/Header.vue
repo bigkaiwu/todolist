@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { MessageBox } from 'element-ui'
 export default {
   name: 'Header',
   data(){
@@ -126,7 +127,22 @@ export default {
       this.addUser=''
     },
     del(idx){
-      this.tableData.splice(idx,1)
+      MessageBox.confirm('此操作将永久删除该表单, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.tableData.splice(idx,1)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
     }
   }
 }

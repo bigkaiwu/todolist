@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Nanjing />
+    <Header />
   </div>
 </template>
 
 <script>
-import Nanjing from '@/views/Nanjing.vue'
+import Header from '@/components/Header.vue'
 
 export default {
   name: 'app',
   components: {
-    Nanjing
+    Header
   }
 }
 </script>
