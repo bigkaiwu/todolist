@@ -13,6 +13,8 @@ import { Alert } from 'element-ui'
 import { Message } from 'element-ui'
 import { Dialog } from 'element-ui'
 import { MessageBox } from 'element-ui'
+import { Form } from 'element-ui'
+import { FormItem } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Breadcrumb)
@@ -26,6 +28,8 @@ Vue.use(TableColumn)
 Vue.use(DatePicker)
 Vue.use(Alert)
 Vue.use(Dialog)
+Vue.use(Form)
+Vue.use(FormItem)
 
 
 // 解决组件Message报错this.$message is not a function

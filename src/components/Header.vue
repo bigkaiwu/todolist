@@ -65,32 +65,73 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" circle></el-button>
+            <el-button type="primary" icon="el-icon-edit" @click="edit(scope.row,scope.$index)" circle></el-button>
             <el-button type="danger" icon="el-icon-delete" @click="del(scope.$index)" circle></el-button>
           </template>
         </el-table-column>
       </el-table>
+      <el-dialog
+        title="编辑用户信息"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+        <div>
+          <el-form ref="form" :model="editUser" label-width="40px">
+            <el-form-item label="姓名">
+              <el-input v-model="editUser.name"></el-input>
+            </el-form-item>
+            <el-form-item label="号码">
+              <el-input v-model="editUser.tel"></el-input>
+            </el-form-item>
+            <el-form-item label="备注">
+              <el-input v-model="editUser.tips"></el-input>
+            </el-form-item>
+            <el-form-item label="时间">
+              <el-date-picker
+                v-model="editUser.time"
+                type="date"
+                placeholder="请选择日期"
+                format="yyyy 年 MM 月 dd 日"
+                value-format="yyyy-MM-dd">
+              </el-date-picker>
+            </el-form-item>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="confirm">确 定</el-button>
+        </span>
+      </el-dialog>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import { MessageBox } from 'element-ui'
 export default {
   name: 'Header',
   data(){
     return{
-      addUser:{
+      addUser:{ //添加用户信息
         name:'',
         tel:'',
         tips:'',
         time:''
       },
-      tableData: [{
+      tableData: [{ 
         name: '王小虎',
         tel:'13696551234',
         tips: '这是一段备注文字',
         time:'2020-05-12'
-      }]
+      }],
+      dialogVisible: false, //编辑弹框显示
+      editUser:{ //添加用户信息
+        name:'',
+        tel:'',
+        tips:'',
+        time:''
+      },
+      userIndex:0
     }
   },
   methods:{
@@ -143,6 +184,23 @@ export default {
             message: '已取消删除'
           });          
         });
+    },
+    handleClose() {
+    },
+    edit(item,idx){
+      this.userIndex = idx
+      this.editUser = {
+        name:item.name,
+        tel:item.tel,
+        tips:item.tips,
+        time:item.time
+      }
+      this.dialogVisible = true
+    },
+    confirm(){
+      this.dialogVisible = false
+      //this.tableData[this.userIndex] = this.editUser   由于 JavaScript 的限制，Vue 不能检测数组和对象的变化。深入响应式原理
+      Vue.set(this.tableData,this.userIndex, this.editUser)
     }
   }
 }
